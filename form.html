@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "inverse-surface": "#313030",
+                "primary-container": "#1c1b1b",
+                "on-primary-fixed": "#1c1b1b",
+                "on-primary-container": "#858383",
+                "on-secondary": "#ffffff",
+                "on-tertiary-container": "#868382",
+                "inverse-primary": "#c8c6c5",
+                "surface-container-highest": "#e5e2e1",
+                "on-surface-variant": "#444748",
+                "surface-variant": "#e5e2e1",
+                "on-secondary-container": "#65625a",
+                "primary-fixed": "#e5e2e1",
+                "error": "#ba1a1a",
+                "tertiary-fixed": "#e6e2df",
+                "surface-bright": "#fdf8f8",
+                "primary": "#000000",
+                "surface": "#fdf8f8",
+                "tertiary-container": "#1c1b1a",
+                "surface-dim": "#ddd9d8",
+                "on-surface": "#1c1b1b",
+                "on-tertiary-fixed": "#1c1b1a",
+                "outline-variant": "#c4c7c7",
+                "inverse-on-surface": "#f4f0ef",
+                "error-container": "#ffdad6",
+                "on-background": "#1c1b1b",
+                "surface-container": "#f1edec",
+                "secondary": "#615e56",
+                "surface-container-low": "#f7f3f2",
+                "on-primary-fixed-variant": "#474746",
+                "on-secondary-fixed-variant": "#49473f",
+                "on-tertiary-fixed-variant": "#484645",
+                "surface-container-lowest": "#ffffff",
+                "on-primary": "#ffffff",
+                "tertiary": "#000000",
+                "surface-container-high": "#ebe7e6",
+                "on-tertiary": "#ffffff",
+                "primary-fixed-dim": "#c8c6c5",
+                "surface-tint": "#5f5e5e",
+                "secondary-fixed-dim": "#cbc6bc",
+                "tertiary-fixed-dim": "#cac6c4",
+                "on-error-container": "#93000a",
+                "outline": "#747878",
+                "on-secondary-fixed": "#1d1c16",
+                "secondary-container": "#e4dfd5",
+                "on-error": "#ffffff",
+                "secondary-fixed": "#e7e2d8",
+                "background": "#fdf8f8"
+            },
+            "borderRadius": {
+                "DEFAULT": "0px",
+                "lg": "0px",
+                "xl": "0px",
+                "full": "9999px"
+            },
+            "fontFamily": {
+                "label-caps": ["Inter"],
+                "h1": ["Inter"],
+                "body-md": ["Inter"],
+                "display": ["Inter"],
+                "h2": ["Inter"],
+                "meta": ["Inter"],
+                "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                "h1": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "h2": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                "meta": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #F5F2EC;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-background selection:bg-primary selection:text-white">
+<div class="flex min-h-screen">
+<!-- Side Navigation Shell -->
+<aside class="fixed left-0 top-0 h-full w-[220px] border-r border-[#D4D0C8] dark:border-zinc-800 bg-[#EDEAE2] dark:bg-zinc-900 flex flex-col h-screen p-6 gap-4">
+<div class="text-2xl font-black text-[#1A1A1A] dark:text-zinc-50 uppercase tracking-tighter border-b-2 border-[#1A1A1A] pb-2 mb-8">
+                b4i die
+            </div>
+<nav class="flex flex-col gap-2">
+<a class="font-label-caps text-sm font-bold uppercase tracking-tight flex items-center gap-3 text-[#1A1A1A] dark:text-white border-l-4 border-[#1A1A1A] dark:border-zinc-100 pl-4 py-2 transition-colors duration-75" href="#">
+<span class="material-symbols-outlined" data-icon="list">list</span>
+<span>All</span>
+</a>
+<a class="font-label-caps text-sm font-bold uppercase tracking-tight flex items-center gap-3 text-[#1A1A1A]/60 dark:text-zinc-500 pl-4 py-2 hover:text-[#1A1A1A] dark:hover:text-zinc-200 hover:bg-[#D4D0C8]/20 dark:hover:bg-zinc-800 transition-colors duration-75" href="#">
+<span class="material-symbols-outlined" data-icon="check_box">check_box</span>
+<span>Done</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-[#D4D0C8] dark:border-zinc-800">
+<button class="w-full bg-[#1A1A1A] text-[#F5F2EC] py-3 font-label-caps uppercase text-xs tracking-widest hover:opacity-90 transition-opacity">
+                    Add Goal
+                </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-[220px] flex-1 p-10 max-w-[1200px]">
+<header class="mb-12">
+<p class="font-label-caps text-secondary mb-2 uppercase tracking-widest">Personal Manifesto</p>
+<h1 class="font-display text-primary uppercase">The Registry</h1>
+</header>
+<!-- Bento Grid of Intent -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Large Item -->
+<div class="col-span-8 border border-[#D4D0C8] bg-surface-container-lowest p-8 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 font-label-caps text-outline">001</div>
+<h2 class="font-h1 text-primary mb-4">Cross the Atacama Desert on horseback</h2>
+<p class="font-body-lg text-secondary mb-8 max-w-xl">A fourteen-day expedition through the driest non-polar place on Earth. Navigating salt flats and lunar landscapes under the clearest skies known to man.</p>
+<div class="flex gap-4">
+<span class="border border-outline px-3 py-1 font-meta text-outline">CHILE</span>
+<span class="border border-outline px-3 py-1 font-meta text-outline">EXPEDITION</span>
+</div>
+</div>
+<!-- Media Item -->
+<div class="col-span-4 border border-[#D4D0C8] bg-surface-container-high overflow-hidden group">
+<img class="w-full h-48 object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="monochrome architectural photograph of a brutalist concrete structure with sharp shadows and clear blue sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBS05NDCpzA3qZyezdCO7WKyV_N9fHj_WkeDSuqmSYYDXAhUWJsDJu4HbEvqwu-Xr127WE1pP0HELWX4JV_4EnyBKEBigy83SNsmJ5RchweUQx4GOs84AEkBF1ZacV24r4ni96URrWFAFrtscl3vBWp_M6tx7q69ENYT37hkHZ1iduFEMmdXLMvng7SqxoVIM6ZlCoEkvPJCOAmZEDUaOIYNB9nONxYe2nYJMy0bBKulyztgxPc_uEYbjWgH5m_9R9vqKxoBGdD4FF"/>
+<div class="p-6">
+<p class="font-label-caps text-primary mb-2">002</p>
+<h3 class="font-h2 text-primary">Master Japanese joinery</h3>
+<p class="font-meta text-secondary mt-2">The art of Sashimono.</p>
+</div>
+</div>
+<!-- Horizontal Entry -->
+<div class="col-span-12 border-t border-b border-[#D4D0C8] py-6 flex justify-between items-center">
+<div class="flex items-baseline gap-8">
+<span class="font-label-caps text-outline">003</span>
+<h3 class="font-h2 text-primary">Dine at Osteria Francescana</h3>
+</div>
+<div class="flex gap-4 items-center">
+<span class="font-meta text-secondary">MODENA, ITALY</span>
+<span class="material-symbols-outlined text-outline" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- ADD ITEM OVERLAY -->
+<!-- Backdrop -->
+<div class="fixed inset-0 bg-black/40 backdrop-blur-[2px] z-40 flex items-center justify-center p-6">
+<!-- Modal Container -->
+<div class="w-full max-w-md bg-white border border-[#1A1A1A] z-50 p-10 relative">
+<!-- Header -->
+<div class="mb-10">
+<h2 class="font-h1 text-primary uppercase mb-2">New Intent</h2>
+<div class="h-1 w-12 bg-primary"></div>
+</div>
+<!-- Form -->
+<form class="space-y-8">
+<div>
+<label class="block font-label-caps text-secondary uppercase mb-3 text-[10px] tracking-widest" for="goal-name">
+                        Goal Name <span class="text-error">*</span>
+</label>
+<input class="w-full bg-transparent border border-[#D4D0C8] focus:border-[#1A1A1A] p-4 text-primary font-body-md outline-none transition-colors" id="goal-name" placeholder="e.g. Learn to pilot a glider" required="" type="text"/>
+</div>
+<div>
+<label class="block font-label-caps text-secondary uppercase mb-3 text-[10px] tracking-widest" for="location">
+                        Location
+                    </label>
+<div class="relative">
+<input class="w-full bg-transparent border border-[#D4D0C8] focus:border-[#1A1A1A] p-4 pl-10 text-primary font-body-md outline-none transition-colors" id="location" placeholder="City, Country or Coordinates" type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm" data-icon="location_on">location_on</span>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-8 pt-4">
+<button class="bg-[#1A1A1A] text-white px-8 py-4 font-label-caps uppercase text-xs tracking-widest hover:bg-black transition-colors" type="submit">
+                        Save Intent
+                    </button>
+<button class="font-label-caps text-secondary uppercase text-xs tracking-widest hover:text-primary transition-colors" type="button">
+                        Cancel
+                    </button>
+</div>
+</form>
+<!-- Decorative corner number -->
+<div class="absolute bottom-4 right-4 font-label-caps text-[#D4D0C8] text-[10px]">
+                ENTRY_FORM_v1.0
+            </div>
+</div>
+</div>
+</body></html>

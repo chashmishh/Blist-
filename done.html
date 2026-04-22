@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "inverse-surface": "#313030",
+                "primary-container": "#1c1b1b",
+                "on-primary-fixed": "#1c1b1b",
+                "on-primary-container": "#858383",
+                "on-secondary": "#ffffff",
+                "on-tertiary-container": "#868382",
+                "inverse-primary": "#c8c6c5",
+                "surface-container-highest": "#e5e2e1",
+                "on-surface-variant": "#444748",
+                "surface-variant": "#e5e2e1",
+                "on-secondary-container": "#65625a",
+                "primary-fixed": "#e5e2e1",
+                "error": "#ba1a1a",
+                "tertiary-fixed": "#e6e2df",
+                "surface-bright": "#fdf8f8",
+                "primary": "#000000",
+                "surface": "#fdf8f8",
+                "tertiary-container": "#1c1b1a",
+                "surface-dim": "#ddd9d8",
+                "on-surface": "#1c1b1b",
+                "on-tertiary-fixed": "#1c1b1a",
+                "outline-variant": "#c4c7c7",
+                "inverse-on-surface": "#f4f0ef",
+                "error-container": "#ffdad6",
+                "on-background": "#1c1b1b",
+                "surface-container": "#f1edec",
+                "secondary": "#615e56",
+                "surface-container-low": "#f7f3f2",
+                "on-primary-fixed-variant": "#474746",
+                "on-secondary-fixed-variant": "#49473f",
+                "on-tertiary-fixed-variant": "#484645",
+                "surface-container-lowest": "#ffffff",
+                "on-primary": "#ffffff",
+                "tertiary": "#000000",
+                "surface-container-high": "#ebe7e6",
+                "on-tertiary": "#ffffff",
+                "primary-fixed-dim": "#c8c6c5",
+                "surface-tint": "#5f5e5e",
+                "secondary-fixed-dim": "#cbc6bc",
+                "tertiary-fixed-dim": "#cac6c4",
+                "on-error-container": "#93000a",
+                "outline": "#747878",
+                "on-secondary-fixed": "#1d1c16",
+                "secondary-container": "#e4dfd5",
+                "on-error": "#ffffff",
+                "secondary-fixed": "#e7e2d8",
+                "background": "#fdf8f8"
+            },
+            "borderRadius": {
+                "DEFAULT": "0px",
+                "lg": "0px",
+                "xl": "0px",
+                "full": "0px"
+            },
+            "fontFamily": {
+                "label-caps": ["Inter"],
+                "h1": ["Inter"],
+                "body-md": ["Inter"],
+                "display": ["Inter"],
+                "h2": ["Inter"],
+                "meta": ["Inter"],
+                "body-lg": ["Inter"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #F5F2EC;
+            color: #1A1A1A;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md selection:bg-primary selection:text-white">
+<!-- Sidebar Shell -->
+<nav class="fixed left-0 top-0 h-full w-[220px] border-r border-[#3f3f46] bg-[#18181b] flex flex-col p-6 gap-4 z-50">
+<div class="text-2xl font-black text-[#F5F2EC] uppercase tracking-tighter border-b-2 border-[#F5F2EC] pb-2 mb-8">
+            b4i die
+        </div>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 font-label-caps text-label-caps uppercase tracking-tight text-[#F5F2EC]/70 pl-4 py-2 hover:bg-white/10 hover:text-[#F5F2EC] transition-colors duration-75 group" href="all.html">
+<span class="material-symbols-outlined text-[18px]">list</span>
+<span>All</span>
+</a>
+<!-- Active State for Done View -->
+<a class="flex items-center gap-3 font-label-caps text-label-caps uppercase tracking-tight text-[#F5F2EC] border-l-4 border-[#F5F2EC] pl-4 py-2 bg-white/10" href="#">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">check_box</span>
+<span>Done</span>
+</a>
+</div>
+<div class="mt-auto pt-8 border-t border-[#3f3f46]">
+<div class="flex items-center gap-3 mb-4">
+<img alt="User profile" class="w-8 h-8 grayscale object-cover border border-[#1A1A1A]" data-alt="studio portrait of a middle-aged man with sharp features and thoughtful expression against a neutral beige background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEQc1O1v0pQZGDwOWDq-vax0FRV9WIHgXguqE8JhLJ7l-_Dr-BYk9sDcmVEA6N3C0rBZQJEmHQV6d4deEmlMJ5hKhsBgwvq0TnbTptglpMNXNlSphZo5vT4nKaQZP64KKgXR8Nj137BnEuzgdwnwYPteh6S4RNTMKJjfNdFbj4xD-aawJ9flGjhsta5HmsF07gVFAj9yNa4jv6viJfyPpeCYKTaaePIG8f7Efa5G4DTJXNHUx1eu-uyZwE1CcA-OoP_DQSdBlZfLGp"/>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps uppercase text-[#F5F2EC]">Personal Manifesto</span>
+</div>
+</div>
+<button class="w-full border border-[#1A1A1A] bg-[#1A1A1A] text-[#F5F2EC] font-label-caps text-label-caps uppercase py-3 hover:bg-opacity-90 transition-all" data-open-form type="button">
+                Add Goal
+            </button>
+</div>
+</nav>
+<!-- Main Canvas -->
+<main class="ml-[220px] min-h-screen">
+<!-- Hero Header Section -->
+<header class="p-12 border-b border-[#D4D0C8]">
+<div class="max-w-[800px]">
+<h1 class="font-display text-display uppercase mb-4 tracking-tighter">YOUR BUCKET LIST</h1>
+<p class="font-label-caps text-label-caps text-secondary uppercase tracking-[0.2em]" id="done-count">0 done.</p>
+</div>
+</header>
+<!-- Content Grid -->
+<section class="flex flex-col">
+<div id="done-goals-list"></div>
+</section>
+<!-- Footer Pagination / Editorial Note -->
+<footer class="p-12 flex justify-between items-center bg-[#F5F2EC] border-t border-[#D4D0C8]">
+<div class="flex gap-4">
+<button class="border border-[#1A1A1A] px-6 py-2 font-label-caps text-label-caps uppercase hover:bg-[#1A1A1A] hover:text-[#F5F2EC] transition-all">Previous</button>
+<button class="border border-[#1A1A1A] px-6 py-2 font-label-caps text-label-caps uppercase hover:bg-[#1A1A1A] hover:text-[#F5F2EC] transition-all">Next Page</button>
+</div>
+<div class="font-label-caps text-label-caps uppercase text-secondary">
+                Page 01 of 01
+            </div>
+</footer>
+</main>
+<div class="fixed inset-0 bg-black/40 backdrop-blur-[2px] z-40 items-center justify-center p-6 hidden" id="goal-form-modal">
+<div class="w-full max-w-md bg-white border border-[#1A1A1A] z-50 p-10 relative" role="dialog">
+<div class="mb-10">
+<h2 class="font-h1 text-primary uppercase mb-2">New Intent</h2>
+<div class="h-1 w-12 bg-primary"></div>
+</div>
+<form class="space-y-8">
+<div>
+<label class="block font-label-caps text-secondary uppercase mb-3 text-[10px] tracking-widest" for="goal-name-done">
+                    Goal Name <span class="text-error">*</span>
+                </label>
+<input class="w-full bg-transparent border border-[#D4D0C8] focus:border-[#1A1A1A] p-4 text-primary font-body-md outline-none transition-colors" id="goal-name-done" placeholder="e.g. Learn to pilot a glider" required="" type="text"/>
+</div>
+<div>
+<label class="block font-label-caps text-secondary uppercase mb-3 text-[10px] tracking-widest" for="location-done">
+                    Location
+                </label>
+<div class="relative">
+<input class="w-full bg-transparent border border-[#D4D0C8] focus:border-[#1A1A1A] p-4 pl-10 text-primary font-body-md outline-none transition-colors" id="location-done" placeholder="City, Country or Coordinates" type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm" data-icon="location_on">location_on</span>
+</div>
+</div>
+<div class="flex items-center gap-8 pt-4">
+<button class="bg-[#1A1A1A] text-white px-8 py-4 font-label-caps uppercase text-xs tracking-widest hover:bg-black transition-colors" type="submit">
+                    Save Intent
+                </button>
+<button class="font-label-caps text-secondary uppercase text-xs tracking-widest hover:text-primary transition-colors" data-close-form type="button">
+                    Cancel
+                </button>
+</div>
+</form>
+<button aria-label="Close form" class="absolute top-4 right-4 text-secondary hover:text-primary transition-colors" data-close-form type="button">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+</div>
+<script>
+        (function () {
+            const STORAGE_KEY = "blist-goals";
+            const modal = document.getElementById("goal-form-modal");
+            const openButtons = document.querySelectorAll("[data-open-form]");
+            const closeButtons = document.querySelectorAll("[data-close-form]");
+            const listContainer = document.getElementById("done-goals-list");
+            const doneCount = document.getElementById("done-count");
+            const form = modal ? modal.querySelector("form") : null;
+            const goalInput = document.getElementById("goal-name-done");
+            const locationInput = document.getElementById("location-done");
+            if (!modal || openButtons.length === 0 || !listContainer || !doneCount || !form || !goalInput) return;
+
+            const escapeHtml = function (value) {
+                return String(value)
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#39;");
+            };
+
+            const getGoals = function () {
+                try {
+                    const raw = localStorage.getItem(STORAGE_KEY);
+                    const parsed = raw ? JSON.parse(raw) : [];
+                    return Array.isArray(parsed) ? parsed : [];
+                } catch (error) {
+                    return [];
+                }
+            };
+
+            const saveGoals = function (goals) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(goals));
+            };
+
+            const renderDoneGoals = function () {
+                const goals = getGoals().filter(function (goal) {
+                    return goal.completed;
+                });
+                doneCount.textContent = goals.length + " done.";
+                if (goals.length === 0) {
+                    listContainer.innerHTML = '<div class="py-16 px-10 border-b border-[#D4D0C8] text-center"><p class="font-label-caps text-label-caps text-secondary uppercase tracking-[0.2em]">No done items yet.</p></div>';
+                    return;
+                }
+
+                listContainer.innerHTML = goals.map(function (goal) {
+                    return '<div class="group grid grid-cols-[80px_1fr_200px] border-b border-[#D4D0C8] bg-[#EDEAE2]/10">' +
+                        '<div class="py-10 px-6 border-r border-[#D4D0C8] flex justify-center items-start">' +
+                        '<label class="cursor-pointer">' +
+                        '<input class="sr-only" data-done-toggle type="checkbox" data-id="' + goal.id + '" checked>' +
+                        '<span class="material-symbols-outlined text-[#1A1A1A]" style="font-variation-settings: \'FILL\' 1;">check_box</span>' +
+                        "</label>" +
+                        "</div>" +
+                        '<div class="py-10 px-10">' +
+                        '<span class="font-label-caps text-label-caps text-secondary mb-2 block">COMPLETED</span>' +
+                        '<h2 class="font-h1 text-h1 uppercase text-[#6B6860]">' + escapeHtml(goal.name) + "</h2>" +
+                        "</div>" +
+                        '<div class="py-10 px-6 border-l border-[#D4D0C8] bg-surface-container-low flex flex-col justify-between">' +
+                        '<span class="font-meta text-meta text-secondary uppercase">' + escapeHtml(goal.location || "Unspecified Location") + "</span>" +
+                        '<div class="w-full h-[1px] bg-[#D4D0C8] my-4"></div>' +
+                        '<div class="flex items-center justify-between gap-4">' +
+                        '<span class="font-label-caps text-label-caps text-[#6B6860]">ARCHIVED</span>' +
+                        '<button class="text-secondary hover:text-error transition-colors" data-delete-goal type="button" data-id="' + goal.id + '" aria-label="Delete goal">' +
+                        '<span class="material-symbols-outlined text-lg">delete</span>' +
+                        "</button>" +
+                        "</div>" +
+                        "</div>" +
+                        "</div>";
+                }).join("");
+            };
+
+            const openModal = function () {
+                modal.classList.remove("hidden");
+                modal.classList.add("flex");
+                goalInput.focus();
+            };
+
+            const closeModal = function () {
+                modal.classList.add("hidden");
+                modal.classList.remove("flex");
+            };
+
+            openButtons.forEach(function (button) {
+                button.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    openModal();
+                });
+            });
+
+            closeButtons.forEach(function (button) {
+                button.addEventListener("click", closeModal);
+            });
+
+            modal.addEventListener("click", function (event) {
+                if (event.target === modal) closeModal();
+            });
+
+            document.addEventListener("keydown", function (event) {
+                if (event.key === "Escape") closeModal();
+            });
+
+            listContainer.addEventListener("change", function (event) {
+                const target = event.target;
+                if (!target.matches("[data-done-toggle]")) return;
+                const goalId = target.getAttribute("data-id");
+                const goals = getGoals().map(function (goal) {
+                    if (goal.id === goalId) goal.completed = target.checked;
+                    return goal;
+                });
+                saveGoals(goals);
+                renderDoneGoals();
+            });
+
+            listContainer.addEventListener("click", function (event) {
+                const deleteButton = event.target.closest("[data-delete-goal]");
+                if (!deleteButton) return;
+                event.preventDefault();
+                event.stopPropagation();
+                const goalId = deleteButton.getAttribute("data-id");
+                const goals = getGoals().filter(function (goal) {
+                    return goal.id !== goalId;
+                });
+                saveGoals(goals);
+                renderDoneGoals();
+            });
+
+            form.addEventListener("submit", function (event) {
+                event.preventDefault();
+                const name = goalInput.value.trim();
+                const location = locationInput ? locationInput.value.trim() : "";
+                if (!name) return;
+                const goals = getGoals();
+                goals.unshift({
+                    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
+                    name: name,
+                    location: location,
+                    completed: false
+                });
+                saveGoals(goals);
+                form.reset();
+                closeModal();
+                renderDoneGoals();
+            });
+
+            window.addEventListener("storage", renderDoneGoals);
+            renderDoneGoals();
+        })();
+    </script>
+</body></html>
