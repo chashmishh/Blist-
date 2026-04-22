@@ -108,9 +108,9 @@
         }
     </style>
 </head>
-<body class="font-body-md antialiased min-h-screen">
+<body class="font-body-md antialiased min-h-screen overflow-x-hidden">
 <!-- Sidebar Shell Implementation -->
-<nav class="fixed left-0 top-0 h-full w-[220px] border-r border-[#3f3f46] dark:border-zinc-800 bg-[#18181b] dark:bg-zinc-900 flex flex-col p-6 gap-4 z-50">
+<nav class="relative w-full border-b border-[#3f3f46] dark:border-zinc-800 bg-[#18181b] dark:bg-zinc-900 flex flex-col p-4 gap-4 z-50 md:fixed md:left-0 md:top-0 md:h-full md:w-[220px] md:border-b-0 md:border-r md:p-6">
 <div class="text-2xl font-black text-[#F5F2EC] dark:text-zinc-50 uppercase tracking-tighter border-b-2 border-[#F5F2EC] pb-2 mb-8">
             b4i die
         </div>
@@ -140,11 +140,11 @@
 </div>
 </nav>
 <!-- Main Content Canvas -->
-<main class="ml-[220px] min-h-screen p-12 flex justify-start">
+<main class="ml-0 min-h-screen p-4 flex justify-start md:ml-[220px] md:p-12">
 <div class="w-full max-w-[860px]">
 <!-- Header Section -->
-<header class="flex justify-between items-baseline mb-16 border-b border-[#1A1A1A] pb-8">
-<h1 class="font-display text-display uppercase tracking-tight leading-none">
+<header class="flex flex-col gap-3 md:flex-row md:justify-between md:items-baseline mb-8 md:mb-16 border-b border-[#1A1A1A] pb-6 md:pb-8">
+<h1 class="font-display text-3xl md:text-display uppercase tracking-tight leading-none">
                     YOUR BUCKET LIST
                 </h1>
 <a class="font-label-caps uppercase text-xs tracking-widest hover:underline decoration-1 underline-offset-4" data-open-form href="#">
@@ -163,7 +163,7 @@
 <div id="all-goals-list"></div>
 </section>
 <!-- Bottom Note -->
-<footer class="mt-24 mb-12 flex justify-between border-t border-[#1A1A1A] pt-8">
+<footer class="mt-12 mb-8 flex flex-col gap-6 md:mt-24 md:mb-12 md:flex-row md:justify-between border-t border-[#1A1A1A] pt-6 md:pt-8">
 <div class="max-w-xs">
 <span class="font-label-caps text-[10px] uppercase tracking-[0.2em] block mb-4">Edition 01 / 2024</span>
 <p class="font-meta text-[12px] leading-relaxed opacity-60">
@@ -171,7 +171,7 @@
                     </p>
 </div>
 <div class="text-right">
-<span class="font-display text-[64px] leading-none opacity-5">B4I DIE</span>
+<span class="font-display text-[36px] md:text-[64px] leading-none opacity-5">B4I DIE</span>
 </div>
 </footer>
 </div>
@@ -262,8 +262,8 @@
                         ? "font-h2 text-h2 uppercase tracking-tight line-through opacity-50"
                         : "font-h2 text-h2 uppercase tracking-tight group-hover:pl-2 transition-all";
                     const rowClass = goal.completed
-                        ? "group flex justify-between items-center py-8 border-b border-[#D4D0C8] bg-[#EDEAE2]/10"
-                        : "group flex justify-between items-center py-8 border-b border-[#D4D0C8] hover:bg-[#EDEAE2]/30 transition-colors";
+                        ? "group flex flex-col items-start gap-4 py-5 border-b border-[#D4D0C8] bg-[#EDEAE2]/10 md:flex-row md:justify-between md:items-center md:py-8"
+                        : "group flex flex-col items-start gap-4 py-5 border-b border-[#D4D0C8] hover:bg-[#EDEAE2]/30 transition-colors md:flex-row md:justify-between md:items-center md:py-8";
                     const boxClass = goal.completed
                         ? "w-8 h-8 border border-[#1A1A1A] bg-[#1A1A1A] text-white flex items-center justify-center cursor-pointer"
                         : "w-8 h-8 border border-[#1A1A1A] flex items-center justify-center cursor-pointer hover:bg-[#1A1A1A] hover:text-white transition-colors";
@@ -272,7 +272,7 @@
                         '<span class="' + nameClass + '">' + escapeHtml(goal.name) + "</span>" +
                         '<span class="font-meta text-secondary uppercase tracking-wider">' + escapeHtml(goal.location || "Unspecified Location") + "</span>" +
                         "</div>" +
-                        '<div class="flex items-center gap-4">' +
+                        '<div class="flex items-center gap-4 self-end md:self-auto">' +
                         '<button class="text-secondary hover:text-error transition-colors" data-delete-goal type="button" data-id="' + goal.id + '" aria-label="Delete goal">' +
                         '<span class="material-symbols-outlined text-lg">delete</span>' +
                         "</button>" +

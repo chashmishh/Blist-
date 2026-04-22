@@ -90,9 +90,9 @@
         }
     </style>
 </head>
-<body class="font-body-md text-body-md selection:bg-primary selection:text-white">
+<body class="font-body-md text-body-md selection:bg-primary selection:text-white overflow-x-hidden">
 <!-- Sidebar Shell -->
-<nav class="fixed left-0 top-0 h-full w-[220px] border-r border-[#3f3f46] bg-[#18181b] flex flex-col p-6 gap-4 z-50">
+<nav class="relative w-full border-b border-[#3f3f46] bg-[#18181b] flex flex-col p-4 gap-4 z-50 md:fixed md:left-0 md:top-0 md:h-full md:w-[220px] md:border-b-0 md:border-r md:p-6">
 <div class="text-2xl font-black text-[#F5F2EC] uppercase tracking-tighter border-b-2 border-[#F5F2EC] pb-2 mb-8">
             b4i die
         </div>
@@ -120,11 +120,11 @@
 </div>
 </nav>
 <!-- Main Canvas -->
-<main class="ml-[220px] min-h-screen">
+<main class="ml-0 min-h-screen md:ml-[220px]">
 <!-- Hero Header Section -->
-<header class="p-12 border-b border-[#D4D0C8]">
+<header class="p-4 md:p-12 border-b border-[#D4D0C8]">
 <div class="max-w-[800px]">
-<h1 class="font-display text-display uppercase mb-4 tracking-tighter">YOUR BUCKET LIST</h1>
+<h1 class="font-display text-3xl md:text-display uppercase mb-4 tracking-tighter">YOUR BUCKET LIST</h1>
 <p class="font-label-caps text-label-caps text-secondary uppercase tracking-[0.2em]" id="done-count">0 done.</p>
 </div>
 </header>
@@ -133,8 +133,8 @@
 <div id="done-goals-list"></div>
 </section>
 <!-- Footer Pagination / Editorial Note -->
-<footer class="p-12 flex justify-between items-center bg-[#F5F2EC] border-t border-[#D4D0C8]">
-<div class="flex gap-4">
+<footer class="p-4 flex flex-col gap-4 md:p-12 md:flex-row md:justify-between md:items-center bg-[#F5F2EC] border-t border-[#D4D0C8]">
+<div class="flex flex-col gap-3 md:flex-row md:gap-4">
 <button class="border border-[#1A1A1A] px-6 py-2 font-label-caps text-label-caps uppercase hover:bg-[#1A1A1A] hover:text-[#F5F2EC] transition-all">Previous</button>
 <button class="border border-[#1A1A1A] px-6 py-2 font-label-caps text-label-caps uppercase hover:bg-[#1A1A1A] hover:text-[#F5F2EC] transition-all">Next Page</button>
 </div>
@@ -226,18 +226,18 @@
                 }
 
                 listContainer.innerHTML = goals.map(function (goal) {
-                    return '<div class="group grid grid-cols-[80px_1fr_200px] border-b border-[#D4D0C8] bg-[#EDEAE2]/10">' +
-                        '<div class="py-10 px-6 border-r border-[#D4D0C8] flex justify-center items-start">' +
+                    return '<div class="group grid grid-cols-1 md:grid-cols-[80px_1fr_200px] border-b border-[#D4D0C8] bg-[#EDEAE2]/10">' +
+                        '<div class="py-6 px-6 border-b border-[#D4D0C8] flex justify-start items-start md:py-10 md:justify-center md:border-b-0 md:border-r">' +
                         '<label class="cursor-pointer">' +
                         '<input class="sr-only" data-done-toggle type="checkbox" data-id="' + goal.id + '" checked>' +
                         '<span class="material-symbols-outlined text-[#1A1A1A]" style="font-variation-settings: \'FILL\' 1;">check_box</span>' +
                         "</label>" +
                         "</div>" +
-                        '<div class="py-10 px-10">' +
+                        '<div class="py-6 px-6 md:py-10 md:px-10">' +
                         '<span class="font-label-caps text-label-caps text-secondary mb-2 block">COMPLETED</span>' +
-                        '<h2 class="font-h1 text-h1 uppercase text-[#6B6860]">' + escapeHtml(goal.name) + "</h2>" +
+                        '<h2 class="font-h1 text-2xl md:text-h1 uppercase text-[#6B6860]">' + escapeHtml(goal.name) + "</h2>" +
                         "</div>" +
-                        '<div class="py-10 px-6 border-l border-[#D4D0C8] bg-surface-container-low flex flex-col justify-between">' +
+                        '<div class="py-6 px-6 border-t border-[#D4D0C8] bg-surface-container-low flex flex-col justify-between md:py-10 md:border-t-0 md:border-l">' +
                         '<span class="font-meta text-meta text-secondary uppercase">' + escapeHtml(goal.location || "Unspecified Location") + "</span>" +
                         '<div class="w-full h-[1px] bg-[#D4D0C8] my-4"></div>' +
                         '<div class="flex items-center justify-between gap-4">' +
