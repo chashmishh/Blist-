@@ -1,4 +1,4 @@
-# b4i die
+# B41 DIE
 
 A minimal desktop web app to track your bucket list — things you want to do, places you want to go, before you die.
 
