@@ -179,155 +179,200 @@
 </button>
 </div>
 </div>
-<script>
-        (function () {
-            const STORAGE_KEY = "blist-goals";
-            const modal = document.getElementById("goal-form-modal");
-            const openButtons = document.querySelectorAll("[data-open-form]");
-            const closeButtons = document.querySelectorAll("[data-close-form]");
-            const listContainer = document.getElementById("done-goals-list");
-            const doneCount = document.getElementById("done-count");
-            const form = modal ? modal.querySelector("form") : null;
-            const goalInput = document.getElementById("goal-name-done");
-            const locationInput = document.getElementById("location-done");
-            if (!modal || openButtons.length === 0 || !listContainer || !doneCount || !form || !goalInput) return;
+<script type="module">
+  import { supabase } from "./supabase.js";
 
-            const escapeHtml = function (value) {
-                return String(value)
-                    .replace(/&/g, "&amp;")
-                    .replace(/</g, "&lt;")
-                    .replace(/>/g, "&gt;")
-                    .replace(/"/g, "&quot;")
-                    .replace(/'/g, "&#39;");
-            };
+  (function () {
+    const TABLE = "bucket_list";
+    const modal = document.getElementById("goal-form-modal");
+    const openButtons = document.querySelectorAll("[data-open-form]");
+    const closeButtons = document.querySelectorAll("[data-close-form]");
+    const listContainer = document.getElementById("done-goals-list");
+    const doneCount = document.getElementById("done-count");
+    const form = modal ? modal.querySelector("form") : null;
+    const goalInput = document.getElementById("goal-name-done");
+    const locationInput = document.getElementById("location-done");
+    if (!modal || openButtons.length === 0 || !listContainer || !doneCount || !form || !goalInput) return;
 
-            const getGoals = function () {
-                try {
-                    const raw = localStorage.getItem(STORAGE_KEY);
-                    const parsed = raw ? JSON.parse(raw) : [];
-                    return Array.isArray(parsed) ? parsed : [];
-                } catch (error) {
-                    return [];
-                }
-            };
+    const escapeHtml = function (value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    };
 
-            const saveGoals = function (goals) {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(goals));
-            };
+    let cachedDoneGoals = [];
+    let isLoading = true;
+    let userId = null;
+    async function ensureUserId() {
+      if (userId) return userId;
+      const { data, error } = await supabase.auth.getUser();
+      if (error) throw error;
+      userId = data?.user?.id || null;
+      if (!userId) throw new Error("Not authenticated");
+      return userId;
+    }
 
-            const renderDoneGoals = function () {
-                const goals = getGoals().filter(function (goal) {
-                    return goal.completed;
-                });
-                doneCount.textContent = goals.length + " done.";
-                if (goals.length === 0) {
-                    listContainer.innerHTML = '<div class="py-16 px-10 border-b border-[#D4D0C8] text-center"><p class="font-label-caps text-label-caps text-secondary uppercase tracking-[0.2em]">No done items yet.</p></div>';
-                    return;
-                }
 
-                listContainer.innerHTML = goals.map(function (goal) {
-                    return '<div class="group grid grid-cols-1 md:grid-cols-[80px_1fr_200px] border-b border-[#D4D0C8] bg-[#EDEAE2]/10">' +
-                        '<div class="py-6 px-6 border-b border-[#D4D0C8] flex justify-start items-start md:py-10 md:justify-center md:border-b-0 md:border-r">' +
-                        '<label class="cursor-pointer">' +
-                        '<input class="sr-only" data-done-toggle type="checkbox" data-id="' + goal.id + '" checked>' +
-                        '<span class="material-symbols-outlined text-[#1A1A1A]" style="font-variation-settings: \'FILL\' 1;">check_box</span>' +
-                        "</label>" +
-                        "</div>" +
-                        '<div class="py-6 px-6 md:py-10 md:px-10">' +
-                        '<span class="font-label-caps text-label-caps text-secondary mb-2 block">COMPLETED</span>' +
-                        '<h2 class="font-h1 text-2xl md:text-h1 uppercase text-[#6B6860]">' + escapeHtml(goal.name) + "</h2>" +
-                        "</div>" +
-                        '<div class="py-6 px-6 border-t border-[#D4D0C8] bg-surface-container-low flex flex-col justify-between md:py-10 md:border-t-0 md:border-l">' +
-                        '<span class="font-meta text-meta text-secondary uppercase">' + escapeHtml(goal.location || "Unspecified Location") + "</span>" +
-                        '<div class="w-full h-[1px] bg-[#D4D0C8] my-4"></div>' +
-                        '<div class="flex items-center justify-between gap-4">' +
-                        '<span class="font-label-caps text-label-caps text-[#6B6860]">ARCHIVED</span>' +
-                        '<button class="text-secondary hover:text-error transition-colors" data-delete-goal type="button" data-id="' + goal.id + '" aria-label="Delete goal">' +
-                        '<span class="material-symbols-outlined text-lg">delete</span>' +
-                        "</button>" +
-                        "</div>" +
-                        "</div>" +
-                        "</div>";
-                }).join("");
-            };
+    const openModal = function () {
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+      goalInput.focus();
+    };
 
-            const openModal = function () {
-                modal.classList.remove("hidden");
-                modal.classList.add("flex");
-                goalInput.focus();
-            };
+    const closeModal = function () {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    };
 
-            const closeModal = function () {
-                modal.classList.add("hidden");
-                modal.classList.remove("flex");
-            };
+    async function fetchDoneGoals() {
+      isLoading = true;
+      try {
+        const { data, error } = await supabase
+          .from(TABLE)
+          .select("id,name,location,done,created_at")
+          .eq("done", true)
+          .order("created_at", { ascending: false });
+        if (error) throw error;
+        cachedDoneGoals = (data || []).map(function (row) {
+          return { id: row.id, name: row.name, location: row.location, completed: true };
+        });
+      } catch (err) {
+        cachedDoneGoals = [];
+      } finally {
+        isLoading = false;
+      }
+    }
 
-            openButtons.forEach(function (button) {
-                button.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    openModal();
-                });
-            });
+    function renderDoneGoals() {
+      const goals = cachedDoneGoals;
+      doneCount.textContent = (isLoading && goals.length === 0 ? 0 : goals.length) + " done.";
 
-            closeButtons.forEach(function (button) {
-                button.addEventListener("click", closeModal);
-            });
+      if (isLoading && goals.length === 0) {
+        listContainer.innerHTML =
+          '<div class="py-16 px-10 border-b border-[#D4D0C8] text-center"><p class="font-label-caps text-label-caps text-secondary uppercase tracking-[0.2em]">Loading…</p></div>';
+        return;
+      }
 
-            modal.addEventListener("click", function (event) {
-                if (event.target === modal) closeModal();
-            });
+      if (goals.length === 0) {
+        listContainer.innerHTML =
+          '<div class="py-16 px-10 border-b border-[#D4D0C8] text-center"><p class="font-label-caps text-label-caps text-secondary uppercase tracking-[0.2em]">No done items yet.</p></div>';
+        return;
+      }
 
-            document.addEventListener("keydown", function (event) {
-                if (event.key === "Escape") closeModal();
-            });
+      listContainer.innerHTML = goals
+        .map(function (goal) {
+          return (
+            '<div class="group grid grid-cols-1 md:grid-cols-[80px_1fr_200px] border-b border-[#D4D0C8] bg-[#EDEAE2]/10">' +
+            '<div class="py-6 px-6 border-b border-[#D4D0C8] flex justify-start items-start md:py-10 md:justify-center md:border-b-0 md:border-r">' +
+            '<label class="cursor-pointer">' +
+            '<input class="sr-only" data-done-toggle type="checkbox" data-id="' +
+            goal.id +
+            '" checked>' +
+            '<span class="material-symbols-outlined text-[#1A1A1A]" style="font-variation-settings: \'FILL\' 1;">check_box</span>' +
+            "</label>" +
+            "</div>" +
+            '<div class="py-6 px-6 md:py-10 md:px-10">' +
+            '<span class="font-label-caps text-label-caps text-secondary mb-2 block">COMPLETED</span>' +
+            '<h2 class="font-h1 text-2xl md:text-h1 uppercase text-[#6B6860]">' +
+            escapeHtml(goal.name) +
+            "</h2>" +
+            "</div>" +
+            '<div class="py-6 px-6 border-t border-[#D4D0C8] bg-surface-container-low flex flex-col justify-between md:py-10 md:border-t-0 md:border-l">' +
+            '<span class="font-meta text-meta text-secondary uppercase">' +
+            escapeHtml(goal.location || "Unspecified Location") +
+            "</span>" +
+            '<div class="w-full h-[1px] bg-[#D4D0C8] my-4"></div>' +
+            '<div class="flex items-center justify-between gap-4">' +
+            '<span class="font-label-caps text-label-caps text-[#6B6860]">ARCHIVED</span>' +
+            '<button class="text-secondary hover:text-error transition-colors" data-delete-goal type="button" data-id="' +
+            goal.id +
+            '" aria-label="Delete goal">' +
+            '<span class="material-symbols-outlined text-lg">delete</span>' +
+            "</button>" +
+            "</div>" +
+            "</div>" +
+            "</div>"
+          );
+        })
+        .join("");
+    }
 
-            listContainer.addEventListener("change", function (event) {
-                const target = event.target;
-                if (!target.matches("[data-done-toggle]")) return;
-                const goalId = target.getAttribute("data-id");
-                const goals = getGoals().map(function (goal) {
-                    if (goal.id === goalId) goal.completed = target.checked;
-                    return goal;
-                });
-                saveGoals(goals);
-                renderDoneGoals();
-            });
+    async function refresh() {
+      await fetchDoneGoals();
+      renderDoneGoals();
+    }
 
-            listContainer.addEventListener("click", function (event) {
-                const deleteButton = event.target.closest("[data-delete-goal]");
-                if (!deleteButton) return;
-                event.preventDefault();
-                event.stopPropagation();
-                const goalId = deleteButton.getAttribute("data-id");
-                const goals = getGoals().filter(function (goal) {
-                    return goal.id !== goalId;
-                });
-                saveGoals(goals);
-                renderDoneGoals();
-            });
+    openButtons.forEach(function (button) {
+      button.addEventListener("click", function (event) {
+        event.preventDefault();
+        openModal();
+      });
+    });
 
-            form.addEventListener("submit", function (event) {
-                event.preventDefault();
-                const name = goalInput.value.trim();
-                const location = locationInput ? locationInput.value.trim() : "";
-                if (!name) return;
-                const goals = getGoals();
-                goals.unshift({
-                    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
-                    name: name,
-                    location: location,
-                    completed: false
-                });
-                saveGoals(goals);
-                form.reset();
-                closeModal();
-                renderDoneGoals();
-            });
+    closeButtons.forEach(function (button) {
+      button.addEventListener("click", closeModal);
+    });
 
-            window.addEventListener("storage", renderDoneGoals);
-            renderDoneGoals();
-        })();
-    </script>
+    modal.addEventListener("click", function (event) {
+      if (event.target === modal) closeModal();
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") closeModal();
+    });
+
+    listContainer.addEventListener("change", async function (event) {
+      const target = event.target;
+      if (!target.matches("[data-done-toggle]")) return;
+      const goalId = target.getAttribute("data-id");
+      const done = !!target.checked;
+      try {
+        const { error } = await supabase.from(TABLE).update({ done }).eq("id", goalId);
+        if (error) throw error;
+      } finally {
+        await refresh();
+      }
+    });
+
+    listContainer.addEventListener("click", async function (event) {
+      const deleteButton = event.target.closest("[data-delete-goal]");
+      if (!deleteButton) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const goalId = deleteButton.getAttribute("data-id");
+      try {
+        const { error } = await supabase.from(TABLE).delete().eq("id", goalId);
+        if (error) throw error;
+      } finally {
+        await refresh();
+      }
+    });
+
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      const name = goalInput.value.trim();
+      const location = locationInput ? locationInput.value.trim() : "";
+      if (!name) return;
+      try {
+        const uid = await ensureUserId();
+        const { error } = await supabase
+          .from(TABLE)
+          .insert({ user_id: uid, name, location: location || null, done: false });
+        if (error) throw error;
+        form.reset();
+        closeModal();
+      } finally {
+        await refresh();
+      }
+    });
+
+    window.addEventListener("focus", refresh);
+    ensureUserId().finally(refresh);
+  })();
+</script>
 <script type="module">
   import { requireAuth } from "./auth-guard.js";
   requireAuth();
