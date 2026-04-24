@@ -1,8 +1,8 @@
 # B4I DIE
 
-A minimal desktop web app to track your bucket list — things you want to do, places you want to go, before you die.
+A minimalist bucket list web app — things you want to do, places you want to go, before you die.
 
-Live at **[b4idie.netlify.app](https://b4idie.netlify.app)**
+Built as a multi-page static site with **Vite**, backed by **Supabase** (Auth + Postgres) and deployed on **Netlify**.
 
 ---
 
@@ -10,15 +10,24 @@ Live at **[b4idie.netlify.app](https://b4idie.netlify.app)**
 
 - Add bucket list items with a name and optional location
 - Mark items as done
-- Your list is private — only you can see it, from any device
+- Your list is private — only you can see it (syncs across devices)
 
 ---
 
 ## Tech stack
 
-- Plain HTML, CSS, Tailwind CSS (CDN)
-- [Supabase](https://supabase.com) — database + authentication
-- Hosted on [Netlify](https://netlify.com), deployed from GitHub
+- Vite (multi-page build)
+- HTML + Tailwind CSS (CDN)
+- [Supabase](https://supabase.com) — Auth + Postgres + RLS
+- [Netlify](https://netlify.com) — hosting + CI deploys from GitHub
+
+---
+
+## Pages
+
+- `index.html`: login
+- `app.html`: all items
+- `done.html`: done items
 
 ---
 
@@ -26,18 +35,21 @@ Live at **[b4idie.netlify.app](https://b4idie.netlify.app)**
 
 ```
 /
-├── index.html      # Login / sign up page
-├── app.html        # Main bucket list view
-└── done.html       # Completed items view
+├── index.html
+├── app.html
+├── done.html
+├── supabase.js         # Supabase client (env-based)
+├── auth.js             # Login / logout actions
+├── auth-guard.js       # Redirects to login when signed out
+├── public/_redirects   # Netlify redirects (copied into dist/)
+└── netlify.toml        # Netlify build settings
 ```
 
 ---
 
-## Setup (if running locally or forking)
+## Supabase setup
 
-### 1. Create a Supabase project
-
-Go to [supabase.com](https://supabase.com), create a free project, then run this in the SQL editor:
+Create a Supabase project, then run this in the SQL editor:
 
 ```sql
 create table bucket_list (
@@ -58,30 +70,57 @@ using (auth.uid() = user_id)
 with check (auth.uid() = user_id);
 ```
 
-### 2. Add your Supabase credentials
+---
 
-In each HTML file, find this block near the top and replace the placeholder values:
+## Environment variables
 
-```js
-const SUPABASE_URL  = 'https://YOUR_PROJECT_ID.supabase.co'
-const SUPABASE_ANON = 'YOUR_ANON_PUBLIC_KEY'
+This app reads Supabase credentials from environment variables (via Vite).
+
+### Local
+
+Create `.env` (don’t commit it):
+
+```bash
+VITE_SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
+VITE_SUPABASE_ANON_KEY=YOUR_ANON_PUBLIC_KEY
 ```
 
-Your credentials are in Supabase under **Project Settings → API**.
+You can find these in Supabase under **Project Settings → API**.
 
-> The anon key is safe to include in frontend code. Data security is handled by Supabase Row Level Security (RLS), not the key itself.
+### Netlify
 
-### 3. Deploy
+In Netlify → **Site settings → Environment variables**, set:
 
-Push to GitHub. If your repo is connected to Netlify, it will auto-deploy on every push.
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_ANON_KEY`
 
 ---
 
-## Auth
+## Run locally
 
-- Users sign up and log in with email + password via Supabase Auth
-- A confirmation email is sent on sign up
-- Sessions persist across devices — log in anywhere to access your list
+```bash
+npm install
+npm run dev
+```
+
+---
+
+## Deploy (Netlify)
+
+The repo includes `netlify.toml`:
+
+- build command: `npm run build`
+- publish directory: `dist`
+
+Netlify will build and publish all pages (`/`, `/app.html`, `/done.html`).
+
+---
+
+## Public repo checklist
+
+- Do **not** commit `.env` files
+- Do **not** commit Supabase **service role** keys (never needed for this frontend)
+- Keep **RLS enabled** on `bucket_list`
 
 ---
 
