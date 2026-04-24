@@ -27,7 +27,7 @@ Live at **[b4idie.netlify.app](https://b4idie.netlify.app)**
 ```
 /
 ├── index.html      # Login / sign up page
-├── list.html       # Main bucket list view
+├── app.html        # Main bucket list view
 └── done.html       # Completed items view
 ```
 

@@ -6,7 +6,6 @@ const form = $("login-form");
 const emailInput = $("email");
 const passwordInput = $("password");
 const statusEl = $("status");
-const magicLinkBtn = $("magic-link");
 const logoutBtn = $("logout");
 
 function setStatus(message, type = "info") {
@@ -17,7 +16,7 @@ function setStatus(message, type = "info") {
 
 async function redirectIfLoggedIn() {
   const { data } = await supabase.auth.getSession();
-  if (data.session) window.location.href = "index.html";
+  if (data.session) window.location.href = "app.html";
 }
 
 async function handlePasswordLogin(event) {
@@ -38,28 +37,7 @@ async function handlePasswordLogin(event) {
   }
 
   setStatus("Signed in. Redirecting…", "success");
-  window.location.href = "index.html";
-}
-
-async function handleMagicLink() {
-  const email = (emailInput?.value || "").trim();
-  if (!email) {
-    setStatus("Enter your email first.", "error");
-    return;
-  }
-
-  setStatus("Sending magic link…");
-  const redirectTo = new URL("index.html", window.location.href).toString();
-  const { error } = await supabase.auth.signInWithOtp({
-    email,
-    options: { emailRedirectTo: redirectTo },
-  });
-  if (error) {
-    setStatus(error.message, "error");
-    return;
-  }
-
-  setStatus("Check your email for the sign-in link.", "success");
+  window.location.href = "app.html";
 }
 
 async function handleLogout() {
@@ -70,7 +48,6 @@ async function handleLogout() {
 }
 
 if (form) form.addEventListener("submit", handlePasswordLogin);
-if (magicLinkBtn) magicLinkBtn.addEventListener("click", handleMagicLink);
 if (logoutBtn) logoutBtn.addEventListener("click", handleLogout);
 
 redirectIfLoggedIn();

@@ -1,369 +1,99 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>B4I DIE — Login</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  </head>
+  <body class="min-h-screen bg-[#F5F2EC] text-[#1A1A1A]">
+    <!-- Full-width split layout (no sidebar) -->
+    <main class="min-h-screen lg:grid lg:grid-cols-2">
+      <section class="hidden lg:flex lg:flex-col lg:justify-between lg:border-r lg:border-black/10 lg:bg-[#F5F2EC] lg:p-16">
+        <div>
+          <div class="inline-flex items-baseline gap-2 border-b-2 border-black pb-2">
+            <span class="text-4xl font-black uppercase tracking-tighter">B4I DIE</span>
+            <span class="text-xs font-semibold uppercase tracking-[0.25em] text-black/60">Bucket list</span>
+          </div>
+          <p class="mt-10 max-w-lg text-lg leading-relaxed text-black/70">
+            Sign in to see your list, keep it synced, and pick up where you left off.
+          </p>
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "inverse-surface": "#313030",
-                    "primary-container": "#1c1b1b",
-                    "on-primary-fixed": "#1c1b1b",
-                    "on-primary-container": "#858383",
-                    "on-secondary": "#ffffff",
-                    "on-tertiary-container": "#868382",
-                    "inverse-primary": "#c8c6c5",
-                    "surface-container-highest": "#e5e2e1",
-                    "on-surface-variant": "#444748",
-                    "surface-variant": "#e5e2e1",
-                    "on-secondary-container": "#65625a",
-                    "primary-fixed": "#e5e2e1",
-                    "error": "#ba1a1a",
-                    "tertiary-fixed": "#e6e2df",
-                    "surface-bright": "#fdf8f8",
-                    "primary": "#000000",
-                    "surface": "#fdf8f8",
-                    "tertiary-container": "#1c1b1a",
-                    "surface-dim": "#ddd9d8",
-                    "on-surface": "#1c1b1b",
-                    "on-tertiary-fixed": "#1c1b1a",
-                    "outline-variant": "#c4c7c7",
-                    "inverse-on-surface": "#f4f0ef",
-                    "error-container": "#ffdad6",
-                    "on-background": "#1c1b1b",
-                    "surface-container": "#f1edec",
-                    "secondary": "#615e56",
-                    "surface-container-low": "#f7f3f2",
-                    "on-primary-fixed-variant": "#474746",
-                    "on-secondary-fixed-variant": "#49473f",
-                    "on-tertiary-fixed-variant": "#484645",
-                    "surface-container-lowest": "#ffffff",
-                    "on-primary": "#ffffff",
-                    "tertiary": "#000000",
-                    "surface-container-high": "#ebe7e6",
-                    "on-tertiary": "#ffffff",
-                    "primary-fixed-dim": "#c8c6c5",
-                    "surface-tint": "#5f5e5e",
-                    "secondary-fixed-dim": "#cbc6bc",
-                    "tertiary-fixed-dim": "#cac6c4",
-                    "on-error-container": "#93000a",
-                    "outline": "#747878",
-                    "on-secondary-fixed": "#1d1c16",
-                    "secondary-container": "#e4dfd5",
-                    "on-error": "#ffffff",
-                    "secondary-fixed": "#e7e2d8",
-                    "background": "#F5F2EC"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0px",
-                    "lg": "0px",
-                    "xl": "0px",
-                    "full": "0px"
-            },
-            "spacing": {
-                    "unit": "4px",
-                    "gutter": "24px",
-                    "margin": "40px",
-                    "container-max": "1200px"
-            },
-            "fontFamily": {
-                    "label-caps": ["Inter"],
-                    "h1": ["Inter"],
-                    "body-md": ["Inter"],
-                    "display": ["Inter"],
-                    "h2": ["Inter"],
-                    "meta": ["Inter"],
-                    "body-lg": ["Inter"]
-            },
-            "fontSize": {
-                    "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
-                    "h1": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
-                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
-                    "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                    "h2": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
-                    "meta": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
-                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
-            }
-          },
-        },
-      }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        body {
-            background-color: #F5F2EC;
-            color: #1A1A1A;
-        }
-        .sharp-edge {
-            border-radius: 0px !important;
-        }
-    </style>
-</head>
-<body class="font-body-md antialiased min-h-screen overflow-x-hidden">
-<!-- Sidebar Shell Implementation -->
-<nav class="relative w-full border-b border-[#3f3f46] dark:border-zinc-800 bg-[#18181b] dark:bg-zinc-900 flex flex-col p-4 gap-4 z-50 md:fixed md:left-0 md:top-0 md:h-full md:w-[220px] md:border-b-0 md:border-r md:p-6">
-<div class="text-2xl font-black text-[#F5F2EC] dark:text-zinc-50 uppercase tracking-tighter border-b-2 border-[#F5F2EC] pb-2 mb-8">
-            b4i die
+          <div class="mt-12 border border-black/10 bg-white/60 p-10">
+            <p class="text-xs font-semibold uppercase tracking-widest text-black/60">Why sign in?</p>
+            <p class="mt-4 text-base text-black/70">
+              Browser storage can be cleared. An account keeps your list attached to you.
+            </p>
+            <div class="mt-10 h-px bg-black/10"></div>
+            <p class="mt-6 text-sm text-black/60">
+              Password sign-in is fastest on desktop.
+            </p>
+          </div>
         </div>
-<div class="flex flex-col gap-2">
-<!-- Active Tab: All -->
-<a class="flex items-center gap-3 text-[#F5F2EC] dark:text-white border-l-4 border-[#F5F2EC] dark:border-zinc-100 pl-4 py-2 font-label-caps uppercase tracking-tight text-sm font-bold hover:bg-white/10 transition-colors duration-75 cursor-pointer" href="#">
-<span class="material-symbols-outlined" data-icon="list">list</span>
-<span>All</span>
-</a>
-<!-- Inactive Tab: Done -->
-<a class="flex items-center gap-3 text-[#F5F2EC]/70 dark:text-zinc-500 pl-4 py-2 font-label-caps uppercase tracking-tight text-sm font-bold hover:text-[#F5F2EC] dark:hover:text-zinc-200 hover:bg-white/10 transition-colors duration-75 cursor-pointer" href="done.html">
-<span class="material-symbols-outlined" data-icon="check_box">check_box</span>
-<span>Done</span>
-</a>
-</div>
-<div class="mt-auto pt-6 border-t border-[#3f3f46] flex flex-col gap-4">
-<div class="flex items-center gap-3">
-<img alt="User profile" class="w-10 h-10 sharp-edge grayscale" data-alt="Monochrome close-up portrait of a thoughtful man in a minimalist studio setting with architectural shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDla_MgfDripWfQ0WLr9zk_dippQFrkD9uljTdC77Mln-VMzCoLApSc_Q80DZsVAFmPb8TkOvk-cZTNp8j8o6AjchUw-lWBbTgNJuycPHe5cwdJkH-n4iPfvGD-mSp8iGCPLeHA3x3zMzOH8tvSgSImQXFZGisnagwo8z35BNFoo1EEB-VYqYDqs7odieWL8miqf4GUmbvmjyLGc9ror6JS2KCHKUaeA4ZAfGxLcZ8BcfYq3Zn5fN_KJJI0iG-Aiwv4a091Q2fu6vVi"/>
-<div>
-<p class="font-label-caps text-[10px] uppercase text-[#F5F2EC]/70">Curator</p>
-<p class="font-bold text-xs uppercase text-[#F5F2EC]">Personal Manifesto</p>
-</div>
-</div>
-<button class="bg-[#1A1A1A] text-[#F5F2EC] py-3 text-center font-label-caps uppercase tracking-widest text-[11px] sharp-edge hover:bg-black transition-colors" data-open-form type="button">
-                Add Goal
-            </button>
-</div>
-</nav>
-<!-- Main Content Canvas -->
-<main class="ml-0 min-h-screen p-4 flex justify-start md:ml-[220px] md:p-12">
-<div class="w-full min-w-0">
-<!-- Header Section -->
-<header class="flex flex-col gap-3 md:flex-row md:justify-between md:items-baseline mb-8 md:mb-16 border-b border-[#1A1A1A] pb-6 md:pb-8">
-<h1 class="font-display text-3xl md:text-display uppercase tracking-tight leading-none">
-                    YOUR BUCKET LIST
-                </h1>
-<a class="font-label-caps uppercase text-xs tracking-widest hover:underline decoration-1 underline-offset-4" data-open-form href="#">
-                    add item +
-                </a>
-</header>
-<section class="mb-16 border border-dashed border-[#D4D0C8] p-8 text-center text-secondary uppercase tracking-wider text-sm" id="all-empty-cta">
-                No items yet. Click Add Goal or add item + to create one.
-            </section>
-<!-- List of Items -->
-<section class="flex flex-col">
-<div class="flex justify-between items-center py-4 border-b border-[#D4D0C8] font-label-caps text-[11px] text-secondary uppercase tracking-widest">
-<span>Intention / Location</span>
-<span>Status</span>
-</div>
-<div id="all-goals-list"></div>
-</section>
-<!-- Bottom Note -->
-<footer class="mt-12 mb-8 flex flex-col gap-6 md:mt-24 md:mb-12 md:flex-row md:justify-between border-t border-[#1A1A1A] pt-6 md:pt-8">
-<div class="max-w-xs">
-<span class="font-label-caps text-[10px] uppercase tracking-[0.2em] block mb-4">Edition 01 / 2024</span>
-<p class="font-meta text-[12px] leading-relaxed opacity-60">
-                        This list represents a definitive record of intent. Items are added with deliberation and removed only upon completion or absolute failure.
-                    </p>
-</div>
-<div class="text-right">
-<span class="font-display text-[36px] md:text-[64px] leading-none opacity-5">B4I DIE</span>
-</div>
-</footer>
-</div>
-</main>
-<div class="fixed inset-0 bg-black/40 backdrop-blur-[2px] z-40 items-center justify-center p-6 hidden" id="goal-form-modal">
-<div class="w-full max-w-md bg-white border border-[#1A1A1A] z-50 p-10 relative" role="dialog">
-<div class="mb-10">
-<h2 class="font-h1 text-primary uppercase mb-2">New Intent</h2>
-<div class="h-1 w-12 bg-primary"></div>
-</div>
-<form class="space-y-8">
-<div>
-<label class="block font-label-caps text-secondary uppercase mb-3 text-[10px] tracking-widest" for="goal-name-all">
-                    Goal Name <span class="text-error">*</span>
-                </label>
-<input class="w-full bg-transparent border border-[#D4D0C8] focus:border-[#1A1A1A] p-4 text-primary font-body-md outline-none transition-colors" id="goal-name-all" placeholder="e.g. Learn to pilot a glider" required="" type="text"/>
-</div>
-<div>
-<label class="block font-label-caps text-secondary uppercase mb-3 text-[10px] tracking-widest" for="location-all">
-                    Location
-                </label>
-<div class="relative">
-<input class="w-full bg-transparent border border-[#D4D0C8] focus:border-[#1A1A1A] p-4 pl-10 text-primary font-body-md outline-none transition-colors" id="location-all" placeholder="City, Country or Coordinates" type="text"/>
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm" data-icon="location_on">location_on</span>
-</div>
-</div>
-<div class="flex items-center gap-8 pt-4">
-<button class="bg-[#1A1A1A] text-white px-8 py-4 font-label-caps uppercase text-xs tracking-widest hover:bg-black transition-colors" type="submit">
-                    Save Intent
-                </button>
-<button class="font-label-caps text-secondary uppercase text-xs tracking-widest hover:text-primary transition-colors" data-close-form type="button">
-                    Cancel
-                </button>
-</div>
-</form>
-<button aria-label="Close form" class="absolute top-4 right-4 text-secondary hover:text-primary transition-colors" data-close-form type="button">
-<span class="material-symbols-outlined">close</span>
-</button>
-</div>
-</div>
-<script>
-        (function () {
-            const STORAGE_KEY = "blist-goals";
-            const modal = document.getElementById("goal-form-modal");
-            const openButtons = document.querySelectorAll("[data-open-form]");
-            const closeButtons = document.querySelectorAll("[data-close-form]");
-            const listContainer = document.getElementById("all-goals-list");
-            const emptyState = document.getElementById("all-empty-cta");
-            const form = modal ? modal.querySelector("form") : null;
-            const goalInput = document.getElementById("goal-name-all");
-            const locationInput = document.getElementById("location-all");
-            if (!modal || openButtons.length === 0 || !listContainer || !form || !goalInput) return;
 
-            const escapeHtml = function (value) {
-                return String(value)
-                    .replace(/&/g, "&amp;")
-                    .replace(/</g, "&lt;")
-                    .replace(/>/g, "&gt;")
-                    .replace(/"/g, "&quot;")
-                    .replace(/'/g, "&#39;");
-            };
+        <div class="text-xs uppercase tracking-widest text-black/50">
+          Edition 01 / 2026
+        </div>
+      </section>
 
-            const getGoals = function () {
-                try {
-                    const raw = localStorage.getItem(STORAGE_KEY);
-                    const parsed = raw ? JSON.parse(raw) : [];
-                    return Array.isArray(parsed) ? parsed : [];
-                } catch (error) {
-                    return [];
-                }
-            };
+      <section class="flex items-center justify-center p-6 sm:p-10 lg:p-16 bg-[#F5F2EC]">
+        <div class="w-full max-w-xl border border-black/10 bg-white p-8 sm:p-10 lg:p-12">
+          <h1 class="text-3xl md:text-4xl font-black uppercase tracking-tighter">Sign in</h1>
+          <p class="mt-2 text-sm md:text-base text-black/70">Log in to see your list.</p>
 
-            const saveGoals = function (goals) {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(goals));
-            };
+          <div
+            id="status"
+            class="mt-6 rounded border border-black/10 bg-[#F5F2EC] px-4 py-3 text-sm"
+            data-type="info"
+          ></div>
 
-            const renderGoals = function () {
-                const goals = getGoals();
-                if (goals.length === 0) {
-                    listContainer.innerHTML = '<div class="py-8 text-center text-secondary uppercase tracking-wider text-sm">Nothing to show yet.</div>';
-                    if (emptyState) emptyState.classList.remove("hidden");
-                    return;
-                }
+          <form id="login-form" class="mt-6 space-y-4">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-widest" for="email"
+            >Email</label
+          >
+          <input
+            id="email"
+            type="email"
+            autocomplete="email"
+            class="mt-2 w-full border border-black/20 bg-transparent px-4 py-3 focus:border-black focus:outline-none"
+            placeholder="you@example.com"
+            required
+          />
+        </div>
 
-                if (emptyState) emptyState.classList.add("hidden");
-                listContainer.innerHTML = goals.map(function (goal) {
-                    const nameClass = goal.completed
-                        ? "font-h2 text-h2 uppercase tracking-tight line-through opacity-50"
-                        : "font-h2 text-h2 uppercase tracking-tight group-hover:pl-2 transition-all";
-                    const rowClass = goal.completed
-                        ? "group flex flex-col items-start gap-4 py-5 border-b border-[#D4D0C8] bg-[#EDEAE2]/10 md:flex-row md:justify-between md:items-center md:py-8"
-                        : "group flex flex-col items-start gap-4 py-5 border-b border-[#D4D0C8] hover:bg-[#EDEAE2]/30 transition-colors md:flex-row md:justify-between md:items-center md:py-8";
-                    const boxClass = goal.completed
-                        ? "w-8 h-8 border border-[#1A1A1A] bg-[#1A1A1A] text-white flex items-center justify-center cursor-pointer"
-                        : "w-8 h-8 border border-[#1A1A1A] flex items-center justify-center cursor-pointer hover:bg-[#1A1A1A] hover:text-white transition-colors";
-                    return '<div class="' + rowClass + '">' +
-                        '<div class="flex flex-col">' +
-                        '<span class="' + nameClass + '">' + escapeHtml(goal.name) + "</span>" +
-                        '<span class="font-meta text-secondary uppercase tracking-wider">' + escapeHtml(goal.location || "Unspecified Location") + "</span>" +
-                        "</div>" +
-                        '<div class="flex items-center gap-4 self-end md:self-auto">' +
-                        '<button class="text-secondary hover:text-error transition-colors" data-delete-goal type="button" data-id="' + goal.id + '" aria-label="Delete goal">' +
-                        '<span class="material-symbols-outlined text-lg">delete</span>' +
-                        "</button>" +
-                        '<label class="' + boxClass + '">' +
-                        '<input class="sr-only" data-goal-toggle type="checkbox" data-id="' + goal.id + '"' + (goal.completed ? " checked" : "") + ">" +
-                        '<span class="material-symbols-outlined text-sm' + (goal.completed ? "" : " hidden") + '" data-icon="check">check</span>' +
-                        "</label>" +
-                        "</div>" +
-                        "</div>";
-                }).join("");
-            };
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-widest" for="password"
+            >Password</label
+          >
+          <input
+            id="password"
+            type="password"
+            autocomplete="current-password"
+            class="mt-2 w-full border border-black/20 bg-transparent px-4 py-3 focus:border-black focus:outline-none"
+            placeholder="••••••••"
+          />
+        </div>
 
-            const openModal = function () {
-                modal.classList.remove("hidden");
-                modal.classList.add("flex");
-                goalInput.focus();
-            };
+        <button
+          type="submit"
+          class="w-full border border-black bg-black px-4 py-3 text-xs font-semibold uppercase tracking-widest text-[#F5F2EC] hover:bg-black/90"
+        >
+          Sign in with password
+        </button>
+      </form>
 
-            const closeModal = function () {
-                modal.classList.add("hidden");
-                modal.classList.remove("flex");
-            };
+      <button
+        id="logout"
+        type="button"
+        class="mt-10 w-full border border-black/30 px-4 py-3 text-xs font-semibold uppercase tracking-widest text-black/70 hover:border-black hover:text-black"
+      >
+        Sign out
+      </button>
+        </div>
+      </section>
+    </main>
 
-            openButtons.forEach(function (button) {
-                button.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    openModal();
-                });
-            });
-
-            closeButtons.forEach(function (button) {
-                button.addEventListener("click", closeModal);
-            });
-
-            modal.addEventListener("click", function (event) {
-                if (event.target === modal) closeModal();
-            });
-
-            document.addEventListener("keydown", function (event) {
-                if (event.key === "Escape") closeModal();
-            });
-
-            listContainer.addEventListener("change", function (event) {
-                const target = event.target;
-                if (!target.matches("[data-goal-toggle]")) return;
-                const goalId = target.getAttribute("data-id");
-                const goals = getGoals().map(function (goal) {
-                    if (goal.id === goalId) goal.completed = target.checked;
-                    return goal;
-                });
-                saveGoals(goals);
-                renderGoals();
-            });
-
-            listContainer.addEventListener("click", function (event) {
-                const deleteButton = event.target.closest("[data-delete-goal]");
-                if (!deleteButton) return;
-                event.preventDefault();
-                event.stopPropagation();
-                const goalId = deleteButton.getAttribute("data-id");
-                const goals = getGoals().filter(function (goal) {
-                    return goal.id !== goalId;
-                });
-                saveGoals(goals);
-                renderGoals();
-            });
-
-            form.addEventListener("submit", function (event) {
-                event.preventDefault();
-                const name = goalInput.value.trim();
-                const location = locationInput ? locationInput.value.trim() : "";
-                if (!name) return;
-                const goals = getGoals();
-                goals.unshift({
-                    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
-                    name: name,
-                    location: location,
-                    completed: false
-                });
-                saveGoals(goals);
-                form.reset();
-                closeModal();
-                renderGoals();
-            });
-
-            window.addEventListener("storage", renderGoals);
-            renderGoals();
-        })();
-</script>
-<script type="module">
-  import { requireAuth } from "./auth-guard.js";
-  requireAuth();
-</script>
-</body></html>
+    <script type="module" src="./auth.js"></script>
+  </body>
+</html>
