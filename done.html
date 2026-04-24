@@ -117,6 +117,9 @@
 <button class="w-full border border-[#1A1A1A] bg-[#1A1A1A] text-[#F5F2EC] font-label-caps text-label-caps uppercase py-3 hover:bg-opacity-90 transition-all" data-open-form type="button">
                 Add Goal
             </button>
+<button class="w-full border border-[#F5F2EC]/30 text-[#F5F2EC]/80 font-label-caps text-label-caps uppercase py-3 hover:border-[#F5F2EC] hover:text-[#F5F2EC] transition-colors mt-3" data-signout type="button">
+                Sign out
+            </button>
 </div>
 </nav>
 <!-- Main Canvas -->
@@ -206,6 +209,17 @@
     let cachedDoneGoals = [];
     let isLoading = true;
     let userId = null;
+
+    const signOutBtn = document.querySelector("[data-signout]");
+    if (signOutBtn) {
+      signOutBtn.addEventListener("click", async function () {
+        try {
+          await supabase.auth.signOut();
+        } finally {
+          window.location.href = "index.html";
+        }
+      });
+    }
     async function ensureUserId() {
       if (userId) return userId;
       const { data, error } = await supabase.auth.getUser();
