@@ -1,5 +1,12 @@
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = 'https://ftuclcqzzuzgnrhmcgam.supabase.co/'
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0dWNsY3F6enV6Z25yaG1jZ2FtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NDIwNTUsImV4cCI6MjA5MjUxODA1NX0.WrM7Fv9jLwyEJSBUEw_bQjvX76kpgjtd5EtY7DoAey4'
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error(
+    "Missing Supabase env vars. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in Netlify environment variables (or your local .env)."
+  );
+}
+
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
